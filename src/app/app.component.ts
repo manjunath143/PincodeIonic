@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 })
 export class MyApp {
   rootPage:any = HomePage;
-  private PincodeChallengeHandler: any
+  private PincodeChallengeHandler: WL.Client.SecurityCheckChallengeHandler;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, renderer: Renderer, public appCtrl: App, public alertCtrl: AlertController) {
     platform.ready().then(() => {
@@ -38,6 +38,18 @@ export class MyApp {
       console.log('--> PincodeChallengeHandler.handleChallenge called');
       this.displayLoginChallenge(challenge);
     });
+    this.PincodeChallengeHandler.handleFailure = (error: any) => {
+        WL.Logger.debug("Challenge Handler Failure!");
+        if(error.failure !== null && error.failure !== undefined){
+           alert(error.failure);
+        }
+        else {
+           alert("Unknown error");
+        }
+      };
+      this.PincodeChallengeHandler.handleSuccess = (success: any) => {
+        WL.Logger.debug("PincodeChallengeHandler Success!");
+      };
   }
 
   displayLoginChallenge(response) {
@@ -61,7 +73,7 @@ export class MyApp {
           role: 'cancel',
           handler: () => {
             console.log('PincodeChallengeHandler: Cancel clicked');
-            this.PincodeChallengeHandler.Cancel();
+            this.PincodeChallengeHandler.cancel();
             prompt.dismiss();
             return false 
           }
