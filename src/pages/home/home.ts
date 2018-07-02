@@ -24,6 +24,7 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
 
   balance: string;
+  msg: string;
 
   constructor(public navCtrl: NavController, private zone: NgZone) { 
     console.log('--> HomePage constructor')
@@ -34,6 +35,7 @@ export class HomePage {
     resourceRequest.send().then((response) => {
       console.log('-->  getBalance(): Success ', response);
       this.zone.run(() => {
+        this.msg = "Your Balance is : ";
         this.balance = response.responseText;
       });
        
