@@ -1,0 +1,8 @@
+{
+  "name": "MFPPincodeIonic",
+  "app_id": "com.ibm.pincodeionic",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
