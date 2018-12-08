@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -26,7 +26,7 @@ export class HomePage {
   balance: string;
   msg: string;
 
-  constructor(public navCtrl: NavController, private zone: NgZone) { 
+  constructor(public navCtrl: NavController) { 
     console.log('--> HomePage constructor')
   }
 
@@ -34,17 +34,17 @@ export class HomePage {
     var resourceRequest = new WLResourceRequest("/adapters/ResourceAdapter/balance",WLResourceRequest.GET);
     resourceRequest.send().then((response) => {
       console.log('-->  getBalance(): Success ', response);
-      this.zone.run(() => {
+      
         this.msg = "Your Balance is : ";
         this.balance = response.responseText;
-      });
+
        
     },
     function(error){
         console.log('-->  getBalance():  ERROR ', error.responseText);
-        this.zone.run(() => {
+    
           this.balance = error;
-        });
+      
     });
   }
 }
